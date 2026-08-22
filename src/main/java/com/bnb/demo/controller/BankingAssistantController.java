@@ -1,6 +1,7 @@
 package com.bnb.demo.controller;
 
 
+import com.bnb.demo.advisors.TokenUsageCustomAdvisor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -27,6 +28,7 @@ public class BankingAssistantController {
     public String promptStuffing(@RequestParam String message) {
         return chatClient
                 .prompt()
+                .advisors(new TokenUsageCustomAdvisor())
                 .system(bankingAssistantPrompt)
                 .user(message)
                 .call()
